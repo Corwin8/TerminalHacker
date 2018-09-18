@@ -53,6 +53,11 @@ public class Hacker : MonoBehaviour {
 			RunPasswordGuessMedium(input);
 		}
 
+		else if (CurrentScreen == Screen.Win)
+		{
+			ShowMainMenu();
+		}
+
 	}
 
 	void RunMainMenu(string input)
@@ -61,14 +66,16 @@ public class Hacker : MonoBehaviour {
 		{
 			level = 1;
 			CurrentScreen = Screen.PasswordEasy;
-			RunPasswordGuessEasy(input);
+			Terminal.WriteLine("Guess password that consists of these letters: M, R, A, E, M, H");
+			Terminal.WriteLine("Type your guess: ");
 		}
 
 		else if (input == "2")
 		{
 			level = 2;
 			CurrentScreen = Screen.PasswordMedium;
-			RunPasswordGuessMedium(input);
+			Terminal.WriteLine("Guess password that consists of these letters: D, O, V, K, A");
+			Terminal.WriteLine("Type your guess: ");
 		}
 
 		else
@@ -79,9 +86,6 @@ public class Hacker : MonoBehaviour {
 
 	void RunPasswordGuessEasy(string input)
 	{
-		Terminal.ClearScreen();
-		Terminal.WriteLine("Guess password that consists of these letters: M, R, A, E, M, H");
-		Terminal.WriteLine("Type your guess: ");
 
 		if (input == "HAMMER")
 		{
@@ -98,8 +102,6 @@ public class Hacker : MonoBehaviour {
 	void RunPasswordGuessMedium(string input)
 	{
 		Terminal.ClearScreen();
-		Terminal.WriteLine("Guess password that consists of these letters: D, O, V, K, A");
-		Terminal.WriteLine("Type your guess: ");
 
 		if (input == "VODKA")
 		{
