@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour {
 
+	//game data
+	string[] Level1Passwords = { "HAMMER", "VIRUS", "COCA COLA" };
+	string[] Level2Passwords = { "VODKA", "RUSSIAN", "TERRORIST", "ASTEROID" };
+
+
 	//game state
 	int level;
 	enum Screen { MainMenu, PasswordEasy, PasswordMedium, Win }
+	string Password;
 	Screen CurrentScreen;
 
 	// Use this for initialization
@@ -62,35 +68,41 @@ public class Hacker : MonoBehaviour {
 
 	void RunMainMenu(string input)
 	{
-		if (input == "1")
-		{
-			level = 1;
-			CurrentScreen = Screen.PasswordEasy;
-			Terminal.WriteLine("Guess password that consists of these letters: M, R, A, E, M, H");
-			Terminal.WriteLine("Type your guess: ");
-		}
+		bool IsValidLevel = (input == "1" || input == "2");
 
-		else if (input == "2")
+		if (IsValidLevel)
 		{
-			level = 2;
-			CurrentScreen = Screen.PasswordMedium;
-			Terminal.WriteLine("Guess password that consists of these letters: D, O, V, K, A");
-			Terminal.WriteLine("Type your guess: ");
+			level = int.Parse(input);
+			switch (level)
+			{
+				case 1:
+					CurrentScreen = Screen.PasswordEasy;
+					Password = Level1Passwords[Random.Range(0,Level1Passwords.Length)];
+					break;
+				case 2:
+					CurrentScreen = Screen.PasswordMedium;
+					Password = Level2Passwords[Random.Range(0,Level2Passwords.Length)];
+					break;
+				default:
+					Terminal.WriteLine("You are talking nonsense, man!");
+					Debug.Log("Invalid level selection.");
+					break;
+			}
 		}
-
 		else
 		{
-			Terminal.WriteLine("You are talking nonsense, man!");
+			Terminal.WriteLine("I told you to choose a level, you are not making any sense!");
 		}
 	}
 
 	void RunPasswordGuessEasy(string input)
 	{
+		Terminal.ClearScreen();
 
-		if (input == "HAMMER")
+		if (input == Password)
 		{
 			CurrentScreen = Screen.Win;
-			Terminal.WriteLine("Congratulations, you managed to destroy your PC.");
+			Terminal.WriteLine("Congratulations, you managed to destroy the Nuclear Powerplant.");
 		}
 
 		else
@@ -103,7 +115,7 @@ public class Hacker : MonoBehaviour {
 	{
 		Terminal.ClearScreen();
 
-		if (input == "VODKA")
+		if (input == Password)
 		{
 			CurrentScreen = Screen.Win;
 			Terminal.WriteLine("Congratulations, you managed to destroy the Nuclear Powerplant.");
