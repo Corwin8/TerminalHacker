@@ -6,7 +6,7 @@ public class Hacker : MonoBehaviour {
 
 	//game state
 	int level;
-	enum Screen { MainMenu, Password, Win }
+	enum Screen { MainMenu, PasswordEasy, PasswordMedium, Win }
 	Screen CurrentScreen;
 
 	// Use this for initialization
@@ -25,10 +25,10 @@ public class Hacker : MonoBehaviour {
 		Terminal.WriteLine("#3 My mind");
 		Terminal.WriteLine("Enter the number of your choice:");
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
-		 
+	void Update() {
+
 	}
 
 	void OnUserInput(string input)
@@ -43,6 +43,16 @@ public class Hacker : MonoBehaviour {
 			RunMainMenu(input);
 		}
 
+		else if (CurrentScreen == Screen.PasswordEasy)
+		{
+			RunPasswordGuessEasy(input);
+		}
+
+		else if (CurrentScreen == Screen.PasswordMedium)
+		{
+			RunPasswordGuessMedium(input);
+		}
+
 	}
 
 	void RunMainMenu(string input)
@@ -50,13 +60,15 @@ public class Hacker : MonoBehaviour {
 		if (input == "1")
 		{
 			level = 1;
-			StartGame();
+			CurrentScreen = Screen.PasswordEasy;
+			RunPasswordGuessEasy(input);
 		}
 
 		else if (input == "2")
 		{
 			level = 2;
-			StartGame();
+			CurrentScreen = Screen.PasswordMedium;
+			RunPasswordGuessMedium(input);
 		}
 
 		else
@@ -65,10 +77,39 @@ public class Hacker : MonoBehaviour {
 		}
 	}
 
-	void StartGame()
+	void RunPasswordGuessEasy(string input)
 	{
-		Terminal.WriteLine("You have chosen level " + level);
-		Terminal.WriteLine("Please, enter your password: ");
-		CurrentScreen = Screen.Password;
+		Terminal.ClearScreen();
+		Terminal.WriteLine("Guess password that consists of these letters: M, R, A, E, M, H");
+		Terminal.WriteLine("Type your guess: ");
+
+		if (input == "HAMMER")
+		{
+			CurrentScreen = Screen.Win;
+			Terminal.WriteLine("Congratulations, you managed to destroy your PC.");
+		}
+
+		else
+		{
+			Terminal.WriteLine("WRONG! Try again: ");
+		}
+	}
+
+	void RunPasswordGuessMedium(string input)
+	{
+		Terminal.ClearScreen();
+		Terminal.WriteLine("Guess password that consists of these letters: D, O, V, K, A");
+		Terminal.WriteLine("Type your guess: ");
+
+		if (input == "VODKA")
+		{
+			CurrentScreen = Screen.Win;
+			Terminal.WriteLine("Congratulations, you managed to destroy the Nuclear Powerplant.");
+		}
+
+		else
+		{
+			Terminal.WriteLine("WRONG! Try again: ");
+		}
 	}
 }
