@@ -77,11 +77,11 @@ public class Hacker : MonoBehaviour {
 			{
 				case 1:
 					CurrentScreen = Screen.PasswordEasy;
-					Password = Level1Passwords[Random.Range(0,Level1Passwords.Length)];
+					Password = Level1Passwords[Random.Range(0, Level1Passwords.Length)];
 					break;
 				case 2:
 					CurrentScreen = Screen.PasswordMedium;
-					Password = Level2Passwords[Random.Range(0,Level2Passwords.Length)];
+					Password = Level2Passwords[Random.Range(0, Level2Passwords.Length)];
 					break;
 				default:
 					Terminal.WriteLine("You are talking nonsense, man!");
@@ -102,7 +102,7 @@ public class Hacker : MonoBehaviour {
 		if (input == Password)
 		{
 			CurrentScreen = Screen.Win;
-			Terminal.WriteLine("Congratulations, you managed to destroy the Nuclear Powerplant.");
+			GiveReward();
 		}
 
 		else
@@ -111,15 +111,46 @@ public class Hacker : MonoBehaviour {
 		}
 	}
 
+	void GiveReward()
+	{
+		Terminal.ClearScreen();
+		switch (level)
+		{
+			case 1:
+				{
+					Terminal.WriteLine("Are you happy now?");
+					Terminal.WriteLine(@"
+
+				
+_____//@@@@@
+					");
+				}
+				break;
+			case 2:
+				{
+					Terminal.WriteLine("Are you happy now?");
+					Terminal.WriteLine(@"
+
+				
+___/////__//@@@@@
+					");
+				}
+				break;
+			default:
+				{
+					Terminal.WriteLine("There is no such thing, fool!");
+					break;
+				}
+		}
+	}
 	void RunPasswordGuessMedium(string input)
 	{
 		Terminal.ClearScreen();
-
 		if (input == Password)
-		{
-			CurrentScreen = Screen.Win;
-			Terminal.WriteLine("Congratulations, you managed to destroy the Nuclear Powerplant.");
-		}
+			{
+				CurrentScreen = Screen.Win;
+				GiveReward();
+			}
 
 		else
 		{
