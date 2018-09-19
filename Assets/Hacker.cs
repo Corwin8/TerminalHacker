@@ -5,11 +5,12 @@ public class Hacker : MonoBehaviour {
 	//game data
 	string[] Level1Passwords = { "HAMMER", "VIRUS", "COCA COLA" };
 	string[] Level2Passwords = { "VODKA", "RUSSIAN", "TERRORIST", "ASTEROID" };
+	string[] Level3Passwords = { "INFATUATION", "BANKRUPCY", "INSIGNIFICANCE", "FOOLISHNESS", "HYPOCRISY" };
 
 
 	//game state
 	int level;
-	enum Screen { MainMenu, PasswordEasy, PasswordMedium, Win }
+	enum Screen { MainMenu, PasswordEasy, PasswordMedium, PasswordHard, Win }
 	string Password;
 	Screen CurrentScreen;
 
@@ -57,6 +58,11 @@ public class Hacker : MonoBehaviour {
 			RunPasswordGuessMedium(input);
 		}
 
+		else if (CurrentScreen == Screen.PasswordHard)
+		{
+			RunPasswordGuessHard(input);
+		}
+
 		else if (CurrentScreen == Screen.Win)
 		{
 			ShowMainMenu();
@@ -66,7 +72,7 @@ public class Hacker : MonoBehaviour {
 
 	void RunMainMenu(string input)
 	{
-		bool IsValidLevel = (input == "1" || input == "2");
+		bool IsValidLevel = (input == "1" || input == "2" || input == "3");
 
 		if (IsValidLevel)
 		{
@@ -91,6 +97,10 @@ public class Hacker : MonoBehaviour {
 			case 2:
 				CurrentScreen = Screen.PasswordMedium;
 				Password = Level2Passwords[Random.Range(0, Level2Passwords.Length)];
+				break;
+			case 3:
+				CurrentScreen = Screen.PasswordHard;
+				Password = Level3Passwords[Random.Range(0, Level3Passwords.Length)];
 				break;
 			default:
 				Terminal.WriteLine("You are talking nonsense, man!");
@@ -118,6 +128,41 @@ public class Hacker : MonoBehaviour {
 			AskForPassword();
 		}
 	}
+
+	void RunPasswordGuessMedium(string input)
+	{
+		Terminal.ClearScreen();
+		if (input == Password)
+		{
+			CurrentScreen = Screen.Win;
+			GiveReward();
+		}
+
+		else
+		{
+			Terminal.WriteLine("WRONG! Try again: ");
+			AskForPassword();
+		}
+	}
+
+	void RunPasswordGuessHard(string input)
+	{
+		Terminal.ClearScreen();
+
+		if (input == Password)
+		{
+			CurrentScreen = Screen.Win;
+			GiveReward();
+		}
+
+		else
+		{
+			Terminal.WriteLine("WRONG! Try again: ");
+			ShowMenuShortcut();
+			AskForPassword();
+		}
+	}
+
 
 	void ShowMenuShortcut()
 	{
@@ -159,26 +204,26 @@ public class Hacker : MonoBehaviour {
 					");
 				}
 				break;
+			case 3:
+				{
+					Terminal.WriteLine("It didn't hurt, did it?");
+					Terminal.WriteLine(@"
+
+SEMPTINESSEMPTINESSEMPTINESSEMPTINES
+SSEMPTINESSEMPTINESSEMPTINESSEMPTINE
+ESSEMPTINESSEMPTINESSEMPTINESSEMPTIN
+NESSEMPTINESSEMPTINESSEMPTINESSEMPTI
+INESSEMPTINESSEMPTINESSEMPTINESSEMPT
+TINESSEMPTINESSEMPTINESSEMPTINESSEMP
+PTINESSEMPTINESSEMPTINESSEMPTINESSEM
+					");
+				}
+				break;
 			default:
 				{
 					Terminal.WriteLine("There is no such thing, fool!");
 					break;
 				}
-		}
-	}
-	void RunPasswordGuessMedium(string input)
-	{
-		Terminal.ClearScreen();
-		if (input == Password)
-			{
-				CurrentScreen = Screen.Win;
-				GiveReward();
-			}
-
-		else
-		{
-			Terminal.WriteLine("WRONG! Try again: ");
-			AskForPassword();
 		}
 	}
 }
