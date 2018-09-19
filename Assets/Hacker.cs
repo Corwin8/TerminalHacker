@@ -121,8 +121,13 @@ public class Hacker : MonoBehaviour {
 					Terminal.WriteLine("Are you happy now?");
 					Terminal.WriteLine(@"
 
-				
-_____//@@@@@
+
+      _______________
+      |              |
+      |   HAL9000    |
+      |              |
+      |Will I dream? |
+      |______________|
 					");
 				}
 				break;
@@ -131,8 +136,13 @@ _____//@@@@@
 					Terminal.WriteLine("Are you happy now?");
 					Terminal.WriteLine(@"
 
-				
-___/////__//@@@@@
+            /\
+           /  \
+          /    \
+         /      \
+		/ (    ) \
+       /    __    \
+      /____________\
 					");
 				}
 				break;
