@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Hacker : MonoBehaviour {
 
@@ -73,26 +71,34 @@ public class Hacker : MonoBehaviour {
 		if (IsValidLevel)
 		{
 			level = int.Parse(input);
-			switch (level)
-			{
-				case 1:
-					CurrentScreen = Screen.PasswordEasy;
-					Password = Level1Passwords[Random.Range(0, Level1Passwords.Length)];
-					break;
-				case 2:
-					CurrentScreen = Screen.PasswordMedium;
-					Password = Level2Passwords[Random.Range(0, Level2Passwords.Length)];
-					break;
-				default:
-					Terminal.WriteLine("You are talking nonsense, man!");
-					Debug.Log("Invalid level selection.");
-					break;
-			}
+			AskForPassword();
 		}
 		else
 		{
 			Terminal.WriteLine("I told you to choose a level, you are not making any sense!");
+			ShowMenuShortcut();
 		}
+	}
+
+	void AskForPassword()
+	{
+		switch (level)
+		{
+			case 1:
+				CurrentScreen = Screen.PasswordEasy;
+				Password = Level1Passwords[Random.Range(0, Level1Passwords.Length)];
+				break;
+			case 2:
+				CurrentScreen = Screen.PasswordMedium;
+				Password = Level2Passwords[Random.Range(0, Level2Passwords.Length)];
+				break;
+			default:
+				Terminal.WriteLine("You are talking nonsense, man!");
+				Debug.Log("Invalid level selection.");
+				break;
+		}
+		Terminal.WriteLine("This is a help for you: " + Password.Anagram());
+		Terminal.WriteLine("Now type your guess: ");
 	}
 
 	void RunPasswordGuessEasy(string input)
@@ -108,7 +114,14 @@ public class Hacker : MonoBehaviour {
 		else
 		{
 			Terminal.WriteLine("WRONG! Try again: ");
+			ShowMenuShortcut();
+			AskForPassword();
 		}
+	}
+
+	void ShowMenuShortcut()
+	{
+		Terminal.WriteLine("You can return to Main Menu anytime by typing 'Menu'.");
 	}
 
 	void GiveReward()
@@ -165,6 +178,7 @@ public class Hacker : MonoBehaviour {
 		else
 		{
 			Terminal.WriteLine("WRONG! Try again: ");
+			AskForPassword();
 		}
 	}
 }
