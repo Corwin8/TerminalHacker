@@ -43,6 +43,11 @@ public class Hacker : MonoBehaviour {
 			ShowMainMenu();
 		}
 
+		else if (input == "quit" || input == "exit" || input == "exit")
+		{
+			Application.Quit();
+		}
+
 		else if (CurrentScreen == Screen.MainMenu)
 		{
 			RunMainMenu(input);
